@@ -1,6 +1,7 @@
 package com.example.backend.api;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.backend.business.TestBusiness;
 import com.example.backend.exception.BaseException;
@@ -10,6 +11,7 @@ import com.example.backend.model.TestResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -39,6 +41,12 @@ public class TestApi {
         String response = business.register(request);
         return ResponseEntity.ok(response);
 
-    } 
+    }
+
+    @PostMapping("/uploadprofile")
+    public ResponseEntity<String> uploadprofilePicture(@RequestPart MultipartFile file) throws BaseException {
+        String response = business.uploadPicture(file);
+        return ResponseEntity.ok(response);
+    }
 
 }
