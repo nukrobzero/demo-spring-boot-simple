@@ -3,7 +3,8 @@ package com.example.backend.api;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.backend.business.TestBusiness;
+import com.example.backend.business.UserBusiness;
+import com.example.backend.entity.User;
 import com.example.backend.exception.BaseException;
 import com.example.backend.model.RegisterRequest;
 import com.example.backend.model.TestResponse;
@@ -16,13 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/test")
-public class TestApi {
+@RequestMapping("/user")
+public class UserApi {
 
     // Constructor Injection
-    private final TestBusiness business;
+    private final UserBusiness business;
 
-    public TestApi(TestBusiness business) {
+    public UserApi(UserBusiness business) {
         this.business = business;
     }
 
@@ -37,8 +38,8 @@ public class TestApi {
 
     @PostMapping
     @RequestMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) throws BaseException {
-        String response = business.register(request);
+    public ResponseEntity<User> register(@RequestBody RegisterRequest request) throws BaseException {
+        User response = business.register(request);
         return ResponseEntity.ok(response);
 
     }

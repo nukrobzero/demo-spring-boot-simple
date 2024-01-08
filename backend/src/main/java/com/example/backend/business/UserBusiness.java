@@ -3,32 +3,30 @@ package com.example.backend.business;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.backend.service.UserService;
+import com.example.backend.entity.User;
 import com.example.backend.exception.BaseException;
 import com.example.backend.exception.FileException;
-import com.example.backend.exception.UserException;
 import com.example.backend.model.RegisterRequest;
 
 @Service
-public class TestBusiness {
+public class UserBusiness {
 
-    public String register(RegisterRequest request) throws BaseException {
-        if (request == null) {
-            throw UserException.requestNull();
-        }
+    private final UserService userService;
 
-        // Check validate email
-        if (Objects.isNull(request.getEmail())) {
-            throw UserException.emailNull();
-        }
+    public UserBusiness(UserService userService) {
+        this.userService = userService;
+    }
 
-        // Validate other...
+    public User register(RegisterRequest request) throws BaseException {
+        User user = userService.create(request.getEmail(), request.getPassword(), request.getName());
 
-        return "Success";
+        // todo: mapper
+        return user;
 
     }
 
