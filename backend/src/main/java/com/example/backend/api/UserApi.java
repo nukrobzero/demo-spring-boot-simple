@@ -7,10 +7,14 @@ import com.example.backend.business.UserBusiness;
 import com.example.backend.entity.User;
 import com.example.backend.exception.BaseException;
 import com.example.backend.model.RegisterRequest;
-import com.example.backend.model.TestResponse;
+
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,13 +31,17 @@ public class UserApi {
         this.business = business;
     }
 
-    @GetMapping
-    public TestResponse test() {
-        TestResponse response = new TestResponse();
-        response.setName("nukrob");
-        response.setFood("Pizza");
 
-        return response;
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Optional<String>> deleteUser(@PathVariable("id") String id) throws BaseException {
+        Optional<String> response = business.deleteUser(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() throws BaseException {
+        List<User> response = business.getAllUsers();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping

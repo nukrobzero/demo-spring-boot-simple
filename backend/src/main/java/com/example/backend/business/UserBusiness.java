@@ -3,6 +3,7 @@ package com.example.backend.business;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,18 @@ public class UserBusiness {
 
     public UserBusiness(UserService userService) {
         this.userService = userService;
+    }
+
+    public Optional<String> deleteUser(String id) throws BaseException {
+        Optional<String> deleteUser = userService.deleteUser(id);
+
+        return deleteUser;
+    }
+
+    public List<User> getAllUsers() throws BaseException {
+        List<User> allUsers = userService.getAllUsers();
+
+        return allUsers;
     }
 
     public User register(RegisterRequest request) throws BaseException {

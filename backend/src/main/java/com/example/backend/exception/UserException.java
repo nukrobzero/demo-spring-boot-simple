@@ -33,4 +33,9 @@ public class UserException extends BaseException {
     public static UserException createNameNull() {
         return new UserException("create.name.null");
     }
+
+    //Delete
+    public static UserException deleteRequestNull() {
+        return new UserException("delete.request.null");
+    }
 }

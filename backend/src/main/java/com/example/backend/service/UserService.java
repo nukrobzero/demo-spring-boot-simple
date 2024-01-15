@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -23,9 +24,32 @@ public class UserService {
         return repository.findByEmail(email);
     }
 
+    // getAll
+    public List<User> getAllUsers() {
+        return (List<User>) repository.findAll();
+    }
+
     // delete
-    public void deleteUser(String id) {
-        repository.deleteById(id);
+    public Optional<String> deleteUser(String id) throws BaseException {
+
+        // validate
+        if (Objects.isNull(id)) {
+            throw UserException.deleteRequestNull();
+        }
+        
+        Optional<User> opt = repository.findById(id);
+
+        if (opt.isPresent()) {
+            User userToDelete = opt.get();
+            repository.deleteById(userToDelete.getId());
+            Optional<User> optDelete = repository.findById(id);
+            if (!optDelete.isEmpty()) {
+                throw UserException.requestNull();
+            }
+            return Optional.of("Deleted.");
+        } else {
+            throw UserException.notFound();
+        }
     }
 
     // update
