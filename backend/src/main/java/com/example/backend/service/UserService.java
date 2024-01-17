@@ -32,24 +32,21 @@ public class UserService {
     // delete
     public Optional<String> deleteUser(String id) throws BaseException {
 
-        // validate
-        if (Objects.isNull(id)) {
-            throw UserException.deleteRequestNull();
-        }
-        
         Optional<User> opt = repository.findById(id);
 
         if (opt.isPresent()) {
             User userToDelete = opt.get();
             repository.deleteById(userToDelete.getId());
+
             Optional<User> optDelete = repository.findById(id);
+
             if (!optDelete.isEmpty()) {
                 throw UserException.requestNull();
             }
             return Optional.of("Deleted.");
-        } else {
-            throw UserException.notFound();
         }
+        
+        throw UserException.deleteRequestNull();
     }
 
     // update
