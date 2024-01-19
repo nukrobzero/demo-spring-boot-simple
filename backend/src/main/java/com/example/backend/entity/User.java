@@ -19,9 +19,4 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 256)
     private String name;
 
-    public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
-    }
-
 }
